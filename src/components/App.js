@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Palette from './Palette';
 import Grid from './Grid';
@@ -22,7 +22,16 @@ const setCellListOnLocal = (cellList) => {
 const App = () => {
   const [activeColor, setActiveColor] = useState(COLORS[0]);
 
-  const [cellList, setCellList] = useState(buildCellList());
+  const [cellList, _setCellList] = useState([]);
+
+  const setCellList = (newCellList) => {
+    setCellListOnLocal(newCellList);
+    _setCellList(newCellList);
+  };
+
+  useEffect(() => {
+    _setCellList(getCellListFromLocal());
+  }, []);
 
   return (
     <div className="app">
